@@ -1,19 +1,26 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Main from "./components/app/Main";
 import Home from "./components/Home";
 import AppContext from "./context/AppContext";
 import appReducer from "./reducers/appReducer";
-import initState from "./reducers/initState"
+import initState from "./reducers/initState";
 
 const App = () => {
-	const [state, dispatch] = useReducer(appReducer, initState);
+	const [state, dispatch] = useReducer(appReducer, initState, ()=> {
+		const localState = localStorage.getItem("state");
+		return localState ? JSON.parse(localState) : []
+	});
 
 	const exportValues = {
 		state,
 		dispatch,
 	};
+
+	useEffect(() => {
+		localStorage.setItem("state", JSON.stringify(state));
+	}, [state]);
 
 	return (
 		<AppContext.Provider value={exportValues}>

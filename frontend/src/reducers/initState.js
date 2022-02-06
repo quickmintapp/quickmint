@@ -5,19 +5,7 @@ const initState = {
 		selectedTab: DASHBOARD_TAB,
 	},
 	nftGen: {
-		layers: [
-			// {
-			// 	id: "",
-			// 	layerName: "",
-			// 	layerImages: [
-			// 		{
-			// 			imageName: "",
-			// 			imageSrc: "",
-			// 			rarity: "",
-			// 		},
-			// 	],
-			// },
-		],
+		layers: [],
 		currentEditLayer: "",
 		isPopupOpen: false,
 		isEditPopupOpen: false,

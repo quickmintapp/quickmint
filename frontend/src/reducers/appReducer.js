@@ -7,6 +7,7 @@ import {
 	TOGGLE_ADD_LAYER_POPUP,
 	TOGGLE_EDIT_LAYER_POPUP,
 	ADD_LAYER_IMAGES,
+	SET_STATE,
 } from "./reducerActions";
 
 const appReducer = (state, action) => {
