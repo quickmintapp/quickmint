@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import AppContext from "../../../context/AppContext";
 import {
 	REMOVE_LAYER,
@@ -10,8 +10,7 @@ import uuid from "react-uuid";
 import Message from "../Message";
 
 const Layer = ({ id, layerName, layerImages }) => {
-	const { state, dispatch } = useContext(AppContext);
-	const [fileArr, setFileArr] = useState([]);
+	const { dispatch } = useContext(AppContext);
 
 	const handleSelectedFiles = (e) => {
 		const selectedFiles = [];
@@ -22,15 +21,14 @@ const Layer = ({ id, layerName, layerImages }) => {
 				id: uuid(),
 				src: URL.createObjectURL(selectedFiles[0][i]),
 				name: selectedFiles[0][i].name,
+				rarity: "50",
 			});
 		}
-		setFileArr([...arr]);
 		const editedLayer = {
 			id,
 			layerName,
 			layerImages: arr,
 		};
-		console.log(editedLayer);
 		dispatch({ type: ADD_LAYER_IMAGES, payload: editedLayer });
 	};
 
@@ -40,7 +38,6 @@ const Layer = ({ id, layerName, layerImages }) => {
 				{/* layer name */}
 				<div className="w-full flex justify-between items-center">
 					<h3 className="text-xl font-medium">{layerName}</h3>
-
 					<input
 						type="file"
 						name="images"
@@ -50,7 +47,6 @@ const Layer = ({ id, layerName, layerImages }) => {
 					/>
 				</div>
 				<div className="flex justify-center items-center gap-y-2 gap-x-4 flex-wrap p-4">
-					{console.log(layerImages)}
 					{layerImages.length > 0 ? (
 						layerImages.map((image) => {
 							return (

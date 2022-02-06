@@ -47,7 +47,6 @@ const appReducer = (state, action) => {
 				}
 				return layer;
 			});
-			console.log(editedLayers);
 			return {
 				...state,
 				nftGen: { ...state.nftGen, layers: editedLayers },

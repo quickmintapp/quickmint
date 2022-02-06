@@ -6,17 +6,21 @@ const initState = {
 	},
 	nftGen: {
 		layers: [
-			//     {
-			//     layerName: "",
-			//     layerImages: [{
-			//         imageName: "",
-			//         imageSrc: ""
-			//     }]
-			// }
+			// {
+			// 	id: "",
+			// 	layerName: "",
+			// 	layerImages: [
+			// 		{
+			// 			imageName: "",
+			// 			imageSrc: "",
+			// 			rarity: "",
+			// 		},
+			// 	],
+			// },
 		],
-        currentEditLayer: "",
-        isPopupOpen: false,
-        isEditPopupOpen: false,
+		currentEditLayer: "",
+		isPopupOpen: false,
+		isEditPopupOpen: false,
 	},
 	user: {},
 };

@@ -5,11 +5,9 @@ import { ADD_LAYER, TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActi
 import uuid from "react-uuid";
 
 const AddLayer = () => {
-	const { state, dispatch } = useContext(AppContext);
+	const { dispatch } = useContext(AppContext);
 	const [layerName, setLayerName] = useState("");
 	const [error, setError] = useState("");
-
-	const { isPopupOpen } = state.nftGen;
 
 	const handleAddLayer = () => {
 		if (!layerName) {
@@ -20,7 +18,7 @@ const AddLayer = () => {
 		const layer = {
 			id: uuid(),
 			layerName,
-			layerImages: []
+			layerImages: [],
 		};
 
 		setError("");
@@ -56,7 +54,7 @@ const AddLayer = () => {
 							type="text"
 							value={layerName}
 							onChange={(e) => setLayerName(e.target.value)}
-							className="p-2 rounded-lg outline-none bg-gray-100"
+							className="p-2 rounded-lg outline-none bg-gray-200"
 							required
 						/>
 						<p className="text-base text-comp-100">{error ? error : ""}</p>

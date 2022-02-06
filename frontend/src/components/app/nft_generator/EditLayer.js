@@ -2,11 +2,10 @@ import React, { useState, useContext } from "react";
 import Button from "../../Button";
 import AppContext from "./../../../context/AppContext";
 import { EDIT_LAYER, TOGGLE_EDIT_LAYER_POPUP } from "../../../reducers/reducerActions";
-import uuid from "react-uuid";
 
 const EditLayer = () => {
 	const { state, dispatch } = useContext(AppContext);
-	const { layers, currentEditLayer } = state.nftGen;
+	const { currentEditLayer } = state.nftGen;
 	const [layerName, setLayerName] = useState(currentEditLayer.layerName);
 	const [error, setError] = useState("");
 
@@ -51,7 +50,7 @@ const EditLayer = () => {
 							type="text"
 							value={layerName}
 							onChange={(e) => setLayerName(e.target.value)}
-							className="p-2 rounded-lg outline-none bg-gray-100"
+							className="p-2 rounded-lg outline-none bg-gray-200"
 							required
 						/>
 						<p className="text-base text-comp-100">{error ? error : ""}</p>
