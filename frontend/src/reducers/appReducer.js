@@ -7,7 +7,9 @@ import {
 	TOGGLE_ADD_LAYER_POPUP,
 	TOGGLE_EDIT_LAYER_POPUP,
 	ADD_LAYER_IMAGES,
-	SET_STATE,
+	CONNECTED_WALLET,
+	DISCONNECTED_WALLET,
+	CONNECT_WALLET,
 } from "./reducerActions";
 
 const appReducer = (state, action) => {
@@ -52,6 +54,13 @@ const appReducer = (state, action) => {
 				...state,
 				nftGen: { ...state.nftGen, layers: editedLayers },
 			};
+		case CONNECTED_WALLET:
+			const userWalletAddress = payload; //wallet address of user with already connected account
+			return { ...state, user: { ...state.app.user, address: userWalletAddress } };
+		case DISCONNECTED_WALLET:
+			return { ...state, user: { ...state.app.user, address: "" } };
+		case CONNECT_WALLET:
+			return state;
 		default:
 			return state;
 	}

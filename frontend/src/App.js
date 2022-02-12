@@ -6,11 +6,14 @@ import Home from "./components/Home";
 import AppContext from "./context/AppContext";
 import appReducer from "./reducers/appReducer";
 import { initState } from "./reducers/initState";
+import Web3Auth from "./Web3Auth";
 
 const App = () => {
 	const [state, dispatch] = useReducer(
 		appReducer,
-		localStorage.getItem("state") === null || undefined ? initState : JSON.parse(localStorage.getItem("state"))
+		localStorage.getItem("state") === null || undefined
+			? initState
+			: JSON.parse(localStorage.getItem("state"))
 	);
 
 	const exportValues = {
@@ -24,6 +27,7 @@ const App = () => {
 
 	return (
 		<AppContext.Provider value={exportValues}>
+			<Web3Auth />
 			<div className="bg-bg-100 min-h-screen font-pop text-lg flex flex-col">
 				<Routes>
 					<Route

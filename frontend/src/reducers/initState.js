@@ -10,5 +10,7 @@ export const initState = {
 		isPopupOpen: false,
 		isEditPopupOpen: false,
 	},
-	user: {},
+	user: {
+		address: ""
+	},
 };
