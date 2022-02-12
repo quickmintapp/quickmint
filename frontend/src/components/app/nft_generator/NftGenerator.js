@@ -11,6 +11,10 @@ import uuid from "react-uuid";
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
 	const { layers, isPopupOpen, isEditPopupOpen } = state.nftGen;
+	const uploadedFiles = state.layers ? state.layers.map(layer => {
+		console.log(layer);
+	}) : "";
+	console.log(uploadedFiles);
 
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP });
