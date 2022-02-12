@@ -8,7 +8,6 @@ import {
 import AppContext from "../../context/AppContext";
 import { CHANGE_SELECTED_TAB } from "../../reducers/reducerActions";
 import { Link } from "react-router-dom";
-import { DashboardIcon } from "@radix-ui/react-icons";
 
 const Sidebar = () => {
 	const { state, dispatch } = useContext(AppContext);
