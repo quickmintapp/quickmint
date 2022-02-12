@@ -1,6 +1,6 @@
 import { DASHBOARD_TAB } from "../constants/constants";
 
-const initState = {
+export const initState = {
 	app: {
 		selectedTab: DASHBOARD_TAB,
 	},
@@ -12,5 +12,3 @@ const initState = {
 	},
 	user: {},
 };
-
-export default initState;

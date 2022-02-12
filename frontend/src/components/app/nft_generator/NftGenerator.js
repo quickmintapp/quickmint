@@ -14,7 +14,6 @@ const NftGenerator = () => {
 	const uploadedFiles = state.layers ? state.layers.map(layer => {
 		console.log(layer);
 	}) : "";
-	console.log(uploadedFiles);
 
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP });
