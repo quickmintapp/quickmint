@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import Button from "../Button";
 import AppContext from "../../context/AppContext";
-import CONNECT_WALLET from "../../reducers/reducerActions";
 import { connectWallet } from "./Wallet";
 
 const MainNav = () => {
-	const { state, dispatch } = useContext(AppContext);
+	const { state } = useContext(AppContext);
 	return (
 		<div>
 			<div className="flex justify-between items-center pb-8">

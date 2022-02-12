@@ -6,14 +6,13 @@ import AppContext from "./../../../context/AppContext";
 import AddLayer from "./AddLayer";
 import EditLayer from "./EditLayer";
 import { TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActions";
-import uuid from "react-uuid";
 
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
 	const { layers, isPopupOpen, isEditPopupOpen } = state.nftGen;
-	const uploadedFiles = state.layers ? state.layers.map(layer => {
-		console.log(layer);
-	}) : "";
+	// const uploadedFiles = state.layers ? state.layers.map(layer => {
+	// 	console.log(layer);
+	// }) : "";
 
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP });
@@ -40,6 +39,7 @@ const NftGenerator = () => {
 									btnText="Add a Layer"
 									classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium m-2"
 									onClick={() => handleIsPopupOpen()}
+									disabled={state.user.address ? false : true}
 								/>
 							</div>
 						</div>
@@ -47,19 +47,23 @@ const NftGenerator = () => {
 						{/* all the layers */}
 
 						<div className="flex flex-col justify-center items-start gap-y-4 py-4">
-							{state.nftGen.layers.length > 0 ? (
-								layers.map((layer) => {
-									return (
-										<Layer
-											key={layer.id}
-											id={layer.id}
-											layerName={layer.layerName}
-											layerImages={layer.layerImages}
-										/>
-									);
-								})
+							{state.user.address ? (
+								state.nftGen.layers.length > 0 ? (
+									layers.map((layer) => {
+										return (
+											<Layer
+												key={layer.id}
+												id={layer.id}
+												layerName={layer.layerName}
+												layerImages={layer.layerImages}
+											/>
+										);
+									})
+								) : (
+									<Message message="There are no layers." />
+								)
 							) : (
-								<Message message="There are no layers." />
+								<Message message="Connect to wallet first." />
 							)}
 						</div>
 					</div>
@@ -71,7 +75,7 @@ const NftGenerator = () => {
 							<Button
 								btnText="Generate"
 								classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium p-4 text-xl"
-								disabled={layers.length > 0 ? false : true}
+								disabled={(state.user.address) || !layers.length > 0 ? false : true}
 							/>
 							<Button
 								btnText="Upload to IPFS"

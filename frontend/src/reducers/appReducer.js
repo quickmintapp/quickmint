@@ -9,7 +9,6 @@ import {
 	ADD_LAYER_IMAGES,
 	CONNECTED_WALLET,
 	DISCONNECTED_WALLET,
-	CONNECT_WALLET,
 } from "./reducerActions";
 
 const appReducer = (state, action) => {
@@ -59,8 +58,7 @@ const appReducer = (state, action) => {
 			return { ...state, user: { ...state.app.user, address: userWalletAddress } };
 		case DISCONNECTED_WALLET:
 			return { ...state, user: { ...state.app.user, address: "" } };
-		case CONNECT_WALLET:
-			return state;
+
 		default:
 			return state;
 	}

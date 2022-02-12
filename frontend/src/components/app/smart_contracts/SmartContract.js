@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import Button from "../../Button";
+import AppContext from "../../../context/AppContext";
+import Message from "../Message";
 
 const SmartContract = () => {
+	const {state} = useContext(AppContext);
 	return (
 		<div>
-			<div className="w-full border-b-2 border-b-black flex justify-between items-center">
+			<div className="w-full border-b-2 border-b-black flex justify-between items-center pb-4 my-4">
 				<h2 className="text-xl font-medium">Deploy Smart Contract</h2>
 			</div>
-			<div>
+			{state.user.address ? <div>
 				<div className="flex flex-col items-center gap-y-4 p-6">
 					<div className="flex flex-col gap-y-1 w-2/3">
 						<label className="font-medium" htmlFor="tokenName">
@@ -67,7 +70,7 @@ const SmartContract = () => {
 						classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium text-xl p-4 m-2"
 					/>
 				</div>
-			</div>
+			</div> : <Message message={"Connect to wallet first."} />}
 		</div>
 	);
 };
