@@ -11,6 +11,7 @@ export const initState = {
 		isEditPopupOpen: false,
 	},
 	user: {
-		address: ""
+		address: "",
+		walletName: "",
 	},
 };

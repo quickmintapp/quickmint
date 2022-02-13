@@ -75,7 +75,7 @@ const NftGenerator = () => {
 							<Button
 								btnText="Generate"
 								classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium p-4 text-xl"
-								disabled={(state.user.address) || !layers.length > 0 ? false : true}
+								disabled={state.user.address && layers.length > 1 ? false : true}
 							/>
 							<Button
 								btnText="Upload to IPFS"

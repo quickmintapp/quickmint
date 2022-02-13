@@ -9,6 +9,7 @@ import {
 	ADD_LAYER_IMAGES,
 	CONNECTED_WALLET,
 	DISCONNECTED_WALLET,
+	CHANGE_WALLET_NAME,
 } from "./reducerActions";
 
 const appReducer = (state, action) => {
@@ -55,10 +56,12 @@ const appReducer = (state, action) => {
 			};
 		case CONNECTED_WALLET:
 			const userWalletAddress = payload; //wallet address of user with already connected account
-			return { ...state, user: { ...state.app.user, address: userWalletAddress } };
+			return { ...state, user: { ...state.user, address: userWalletAddress } };
 		case DISCONNECTED_WALLET:
-			return { ...state, user: { ...state.app.user, address: "" } };
-
+			return { ...state, user: { ...state.user, address: "" } };
+		case CHANGE_WALLET_NAME:
+			const { e } = payload; // new wallet name
+			return { ...state, user: { ...state.user, walletName: e.target.value } };
 		default:
 			return state;
 	}
