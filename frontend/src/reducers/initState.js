@@ -1,8 +1,8 @@
-import { DASHBOARD_TAB } from "../constants/constants";
+import { NFTS_GENERATOR_TAB } from "../constants/constants";
 
 export const initState = {
 	app: {
-		selectedTab: DASHBOARD_TAB,
+		selectedTab: NFTS_GENERATOR_TAB,
 	},
 	nftGen: {
 		layers: [],
@@ -13,5 +13,6 @@ export const initState = {
 	user: {
 		address: "",
 		walletName: "",
+		projects: [],
 	},
 };

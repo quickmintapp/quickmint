@@ -10,6 +10,7 @@ import {
 	CONNECTED_WALLET,
 	DISCONNECTED_WALLET,
 	CHANGE_WALLET_NAME,
+	CREATE_NEW_PROJECT,
 } from "./reducerActions";
 
 const appReducer = (state, action) => {

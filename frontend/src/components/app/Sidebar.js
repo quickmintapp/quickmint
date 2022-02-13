@@ -27,7 +27,7 @@ const Sidebar = () => {
 				</Link>
 			</div>
 			<div className="flex flex-col gap-y-2 text-base">
-				<div
+				{/* <div
 					className={`p-2 border-2 border-transparent ${
 						selectedTab === DASHBOARD_TAB ? "bg-bg-100" : "border-bg-100"
 					} rounded-lg hover:bg-bg-100 hover:cursor-pointer`}
@@ -48,7 +48,7 @@ const Sidebar = () => {
 						</svg>
 						{DASHBOARD_TAB}
 					</div>
-				</div>
+				</div> */}
 				<div
 					className={`p-2 border-2 border-transparent ${
 						selectedTab === NFTS_GENERATOR_TAB ? "bg-bg-100" : "border-bg-100"
