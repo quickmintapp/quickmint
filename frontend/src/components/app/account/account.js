@@ -9,7 +9,7 @@ const Account = () => {
 	return (
 		<div>
 			<div className="w-full border-b-2 border-b-black py-4">
-				<h2 className="text-xl font-medium">Your Account</h2>
+				<h2 className="text-xl font-medium">Edit Account</h2>
 			</div>
 			<div className="py-4">
 				{state.user.address ? (

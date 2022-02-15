@@ -26,7 +26,7 @@ const appReducer = (state, action) => {
 			return { ...state, nftGen: { ...state.nftGen, layers: [...state.nftGen.layers, payload] } };
 		case EDIT_LAYER:
 			editedLayers = state.nftGen.layers.map((layer) => {
-				if (layer.id === payload.id) {
+				if (layer.layerId === payload.id) {
 					return { ...layer, layerName: payload.layerName };
 				}
 				return layer;
@@ -35,7 +35,7 @@ const appReducer = (state, action) => {
 		case CURRENT_LAYER_EDITING:
 			return { ...state, nftGen: { ...state.nftGen, currentEditLayer: payload } };
 		case REMOVE_LAYER:
-			newLayers = state.nftGen.layers.filter((layer) => layer.id !== payload);
+			newLayers = state.nftGen.layers.filter((layer) => layer.layerId !== payload);
 			return { ...state, nftGen: { ...state.nftGen, layers: newLayers } };
 		case TOGGLE_ADD_LAYER_POPUP:
 			return { ...state, nftGen: { ...state.nftGen, isPopupOpen: !state.nftGen.isPopupOpen } };
@@ -45,9 +45,10 @@ const appReducer = (state, action) => {
 				nftGen: { ...state.nftGen, isEditPopupOpen: !state.nftGen.isEditPopupOpen },
 			};
 		case ADD_LAYER_IMAGES:
+			const { layerId, layerImages } = payload;
 			editedLayers = state.nftGen.layers.map((layer) => {
-				if (layer.id === payload.id) {
-					return { ...payload };
+				if (layer.layerId === layerId) {
+					return { ...layer, layerImages: [...layerImages] };
 				}
 				return layer;
 			});

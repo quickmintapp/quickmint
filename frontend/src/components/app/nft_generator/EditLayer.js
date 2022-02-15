@@ -15,7 +15,7 @@ const EditLayer = () => {
 			return;
 		}
 		const layer = {
-			id: currentEditLayer.id,
+			id: currentEditLayer.layerId,
 			layerName,
 		};
 		setError("");

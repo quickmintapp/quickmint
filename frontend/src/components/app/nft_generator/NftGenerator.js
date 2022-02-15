@@ -6,6 +6,7 @@ import AppContext from "./../../../context/AppContext";
 import AddLayer from "./AddLayer";
 import EditLayer from "./EditLayer";
 import { TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActions";
+import uuid from "react-uuid";
 
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -52,8 +53,8 @@ const NftGenerator = () => {
 									layers.map((layer) => {
 										return (
 											<Layer
-												key={layer.id}
-												id={layer.id}
+												key={uuid()}
+												layerId={layer.layerId}
 												layerName={layer.layerName}
 												layerImages={layer.layerImages}
 											/>

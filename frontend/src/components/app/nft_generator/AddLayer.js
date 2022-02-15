@@ -16,7 +16,7 @@ const AddLayer = () => {
 		}
 
 		const layer = {
-			id: uuid(),
+			layerId: uuid(),
 			layerName,
 			layerImages: [],
 		};

@@ -9,7 +9,9 @@ const MainNav = () => {
 		<div>
 			<div className="flex justify-between items-center pb-8">
 				<div>
-					<h1 className="font-bold text-2xl">Dashboard</h1>
+					<h1 className="font-bold text-2xl">
+						{state.app.selectedTab.toString()}
+						</h1>
 				</div>
 				<div>
 					{state.user.address ? (
