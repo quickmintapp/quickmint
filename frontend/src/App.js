@@ -22,7 +22,11 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		localStorage.setItem("state", JSON.stringify(state));
+		const mutatedLayers = state.nftGen.layers.map(layer => {
+			return {...layer, layerImages: []}
+		})
+		const mutatedState = {...state, nftGen: {...state.nftGen, layers: mutatedLayers}}
+		localStorage.setItem("state", JSON.stringify(mutatedState));
 	}, [state]);
 
 	return (
