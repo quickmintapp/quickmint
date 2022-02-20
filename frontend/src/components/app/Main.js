@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Sidebar from "./Sidebar";
-// import Dashboard from "./dashboard/Dashboard";
+import Dashboard from "./dashboard/Dashboard";
 import NftGenerator from "./nft_generator/NftGenerator";
 import SmartContract from "./smart_contracts/SmartContract";
 import Account from "./account/account";
@@ -21,10 +21,9 @@ const Main = () => {
 			<div className="w-10/12 p-8">
 				<MainNav />
 				{(() => {
-					// if (state.app.selectedTab === DASHBOARD_TAB) {
-					// 	return <Dashboard />;
-					// } else
-					if (state.app.selectedTab === NFTS_GENERATOR_TAB) {
+					if (state.app.selectedTab === DASHBOARD_TAB) {
+						return <Dashboard />;
+					} else if (state.app.selectedTab === NFTS_GENERATOR_TAB) {
 						return <NftGenerator />;
 					} else if (state.app.selectedTab === SMART_CONTRACTS_TAB) {
 						return <SmartContract />;

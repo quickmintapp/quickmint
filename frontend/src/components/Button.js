@@ -7,7 +7,12 @@ const Button = ({ btnText, classes, disabled, onClick }) => {
 				classes ? classes : ""
 			} ${disabled ? "opacity-25 cursor-not-allowed drop-shadow-none hover:drop-shadow-none" : ""}`}
 			disabled={disabled}
-			onClick={() => onClick()}>
+			onClick={() => {
+				if (onClick === (undefined || null)) {
+					return;
+				}
+				onClick();
+			}}>
 			{btnText}
 		</button>
 	);
