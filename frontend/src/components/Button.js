@@ -8,7 +8,7 @@ const Button = ({ btnText, classes, disabled, onClick }) => {
 			} ${disabled ? "opacity-25 cursor-not-allowed drop-shadow-none hover:drop-shadow-none" : ""}`}
 			disabled={disabled}
 			onClick={() => {
-				if (onClick === (undefined || null)) {
+				if (onClick === undefined) {
 					return;
 				}
 				onClick();

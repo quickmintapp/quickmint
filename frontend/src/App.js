@@ -32,7 +32,7 @@ const App = () => {
 	return (
 		<AppContext.Provider value={exportValues}>
 			<Web3Auth />
-			<div className="bg-bg-100 min-h-screen font-pop text-lg flex flex-col">
+			<div className="bg-bg-100 min-h-screen font-pop text-lg flex flex-col scroll-smooth">
 				<Routes>
 					<Route
 						path="/"
