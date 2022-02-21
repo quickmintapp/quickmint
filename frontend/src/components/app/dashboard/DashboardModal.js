@@ -6,11 +6,13 @@ import { CREATE_NEW_PROJECT, EDIT_PROJECT } from "../../../reducers/reducerActio
 const DashboardModal = ({ dashboardModalPopup, setDashboardModalPopup }) => {
 	const { state, dispatch } = useContext(AppContext);
 	const [projectInfo, setProjectInfo] = useState(
-		dashboardModalPopup.project || {
-			projectName: "",
-			tokenName: "",
-			tokenSymbol: "",
-		}
+		dashboardModalPopup.action === "EDIT"
+			? dashboardModalPopup.project
+			: {
+					projectName: "",
+					tokenName: "",
+					tokenSymbol: "",
+			  }
 	);
 	const [inputErrorMessage, setInputErrorMessage] = useState("");
 

@@ -34,7 +34,18 @@ const NftGenerator = () => {
 				<div>
 					<div>
 						<div className="w-full border-b-2 border-b-black flex justify-between items-center">
-							<h2 className="text-xl font-medium">Upload Layers</h2>
+							<div className="flex gap-x-1 place-items-center">
+								<h2 className="text-xl font-medium">Select Project:</h2>
+								<select className="outline-none bg-bg-200 shadow-md rounded-lg p-1">
+									{state.user.projects.map((p) => {
+										return (
+											<option key={p.id} className="" value={`${p.projectName}`}>
+												{p.projectName}
+											</option>
+										);
+									})}
+								</select>
+							</div>
 							<div>
 								<Button
 									btnText="Add a Layer"

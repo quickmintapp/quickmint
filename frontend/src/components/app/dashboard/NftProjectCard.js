@@ -4,7 +4,7 @@ import { REMOVE_PROJECT } from "../../../reducers/reducerActions";
 
 const NftProjectCard = ({ project, setDashboardModalPopup, dashboardModalPopup }) => {
 	const { tokenSymbol, tokenName, id, projectName } = project;
-	const { state, dispatch } = useContext(AppContext);
+	const { dispatch } = useContext(AppContext);
 	return (
 		<div className="bg-bg-200 p-4 rounded-lg flex flex-col items-center gap-y-2 drop-shadow-lg cursor-pointer hover:drop-shadow-xl">
 			<div className="self-end flex gap-x-1">
@@ -45,7 +45,7 @@ const NftProjectCard = ({ project, setDashboardModalPopup, dashboardModalPopup }
 							strokeLinecap="round"
 							strokeLinejoin="round"
 							strokeWidth={2}
-							d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
 						/>
 					</svg>
 				</div>
