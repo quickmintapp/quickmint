@@ -13,6 +13,8 @@ import {
 	CREATE_NEW_PROJECT,
 	REMOVE_PROJECT,
 	EDIT_PROJECT,
+	SELECT_PROJECT,
+	SELECT_PROJECT_INIT,
 } from "./reducerActions";
 import uuid from "react-uuid";
 
@@ -23,6 +25,7 @@ const appReducer = (state, action) => {
 	let editedLayers;
 	let projectInfo;
 	let id;
+	let editedUserProjects;
 
 	switch (action.type) {
 		case CHANGE_SELECTED_TAB:
@@ -34,16 +37,21 @@ const appReducer = (state, action) => {
 			return { ...state, user: { ...state.user, projects: newUserProjects } };
 		case REMOVE_PROJECT:
 			id = payload.id;
-			const updatedUserProjects = state.user.projects.filter((project) => project.id !== id);
-			return { ...state, user: { ...state.user, projects: updatedUserProjects } };
+			editedUserProjects = state.user.projects.filter((project) => project.id !== id);
+			return { ...state, user: { ...state.user, projects: editedUserProjects } };
 		case EDIT_PROJECT:
-			const editedUserProjects = state.user.projects.map((project) => {
+			editedUserProjects = state.user.projects.map((project) => {
 				if (project.id === payload.id) {
 					return { ...payload.projectInfo };
 				}
 				return project;
 			});
 			return { ...state, user: { ...state.user, projects: editedUserProjects } };
+		case SELECT_PROJECT_INIT:
+			return { ...state, user: { ...state.user, selectedProject: "--NO PROJECTS--" } };
+		case SELECT_PROJECT:
+			const findProjectById = state.user.projects.find((p) => p.id === payload.id);
+			return { ...state, user: { ...state.user, selectedProject: findProjectById } };
 		case ADD_LAYER:
 			return { ...state, nftGen: { ...state.nftGen, layers: [...state.nftGen.layers, payload] } };
 		case EDIT_LAYER:

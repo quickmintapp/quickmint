@@ -13,6 +13,7 @@ export const initState = {
 	user: {
 		address: "",
 		walletName: "",
+		selectedProject: "--NO PROJECTS--",
 		projects: [],
 	},
 };
