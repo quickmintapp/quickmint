@@ -18,14 +18,16 @@ const NftGenerator = () => {
 	const { layers, isPopupOpen, isEditPopupOpen } = state.nftGen;
 
 	const handleIsPopupOpen = () => {
-		dispatch({ type: TOGGLE_ADD_LAYER_POPUP });
+		dispatch({ type: TOGGLE_ADD_LAYER_POPUP, payload: selectedProject });
 	};
 
 	useEffect(() => {
-		if (state.user.projects.length === 0) {
+		if (state.user.projects.length > 0) {
+			dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
+		} else if (state.user.projects.length === 0) {
 			dispatch({ type: SELECT_PROJECT_INIT });
 		}
-	}, [state.user.projects]);
+	}, [state.user.projects, dispatch]);
 
 	return (
 		<div className="flex flex-col">
@@ -55,7 +57,7 @@ const NftGenerator = () => {
 									}}>
 									{(() => {
 										if (state.user.projects.length === 0) {
-											return <option value="No Projects">{selectedProject}</option>;
+											return <option value="No Projects">--NO PROJECTS--</option>;
 										} else {
 											return state.user.projects.map((p) => {
 												return (

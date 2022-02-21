@@ -26,13 +26,23 @@ const appReducer = (state, action) => {
 	let projectInfo;
 	let id;
 	let editedUserProjects;
+	let findProjectById;
 
 	switch (action.type) {
 		case CHANGE_SELECTED_TAB:
 			return { ...state, app: { ...state.app, selectedTab: payload } };
 		case CREATE_NEW_PROJECT:
 			projectInfo = payload.projectInfo;
-			const newUserProject = { ...projectInfo, id: uuid() };
+			const newUserProject = {
+				...projectInfo,
+				id: uuid(),
+				nftGen: {
+					layers: [],
+					currentEditLayer: "",
+					isPopupOpen: false,
+					isEditPopupOpen: false,
+				},
+			};
 			const newUserProjects = [...state.user.projects, newUserProject];
 			return { ...state, user: { ...state.user, projects: newUserProjects } };
 		case REMOVE_PROJECT:
@@ -50,7 +60,7 @@ const appReducer = (state, action) => {
 		case SELECT_PROJECT_INIT:
 			return { ...state, user: { ...state.user, selectedProject: "--NO PROJECTS--" } };
 		case SELECT_PROJECT:
-			const findProjectById = state.user.projects.find((p) => p.id === payload.id);
+			findProjectById = state.user.projects.find((p) => p.id === payload.id);
 			return { ...state, user: { ...state.user, selectedProject: findProjectById } };
 		case ADD_LAYER:
 			return { ...state, nftGen: { ...state.nftGen, layers: [...state.nftGen.layers, payload] } };
@@ -68,7 +78,14 @@ const appReducer = (state, action) => {
 			newLayers = state.nftGen.layers.filter((layer) => layer.layerId !== payload);
 			return { ...state, nftGen: { ...state.nftGen, layers: newLayers } };
 		case TOGGLE_ADD_LAYER_POPUP:
-			return { ...state, nftGen: { ...state.nftGen, isPopupOpen: !state.nftGen.isPopupOpen } };
+			const selectedProject = payload;
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === selectedProject.id) {
+					return { ...p, nftGen: { ...p.nftGen, isPopupOpen: !p.nftGen.isPopupOpen } };
+				}
+				return p;
+			});
+			return { ...state, user: { ...state.user, projects: editedUserProjects } };
 		case TOGGLE_EDIT_LAYER_POPUP:
 			return {
 				...state,
