@@ -11,6 +11,7 @@ import {
 	SELECT_PROJECT_INIT,
 } from "../../../reducers/reducerActions";
 import uuid from "react-uuid";
+import SelectProject from "../SelectProject";
 
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -20,7 +21,9 @@ const NftGenerator = () => {
 		[];
 	const { isPopupOpen } = state.user;
 	const isEditPopupOpen =
-		state.user.selectedProject === "--NO PROJECTS--" ? false : state.user.selectedProject.nftGen.isEditPopupOpen;
+		state.user.selectedProject === "--NO PROJECTS--"
+			? false
+			: state.user.selectedProject.nftGen.isEditPopupOpen;
 
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP, payload: selectedProject });
@@ -28,7 +31,7 @@ const NftGenerator = () => {
 
 	//this useeffect was changing the selectedproject everytime the projects changed, it was a feature
 	// now we need to bring it back again
-	// we need to know which project we changed and then we can use that project id to set it to 
+	// we need to know which project we changed and then we can use that project id to set it to
 	// selected project, so yeah that might work...
 
 	useEffect(() => {
@@ -39,7 +42,7 @@ const NftGenerator = () => {
 			}
 			//  else {
 			// 	// here we are gonna find what project changed and sync it to selectedprojects
-			// 	// 
+			// 	//
 			// }
 		} else if (state.user.projects.length === 0) {
 			dispatch({ type: SELECT_PROJECT_INIT });
@@ -61,32 +64,10 @@ const NftGenerator = () => {
 				<div>
 					<div>
 						<div className="w-full border-b-2 border-b-black flex justify-between items-center">
-							<div className="flex gap-x-1 place-items-center">
-								<h2 className="text-xl font-medium">Select Project:</h2>
-								<select
-									className="outline-none bg-bg-200 shadow-md rounded-lg p-1"
-									value={selectedProject && selectedProject.id}
-									onChange={(e) => {
-										dispatch({
-											type: SELECT_PROJECT,
-											payload: { id: e.target.value },
-										});
-									}}>
-									{(() => {
-										if (state.user.projects.length === 0) {
-											return <option value="No Projects">--NO PROJECTS--</option>;
-										} else {
-											return state.user.projects.map((p) => {
-												return (
-													<option key={p.id} value={p.id}>
-														{p.projectName}
-													</option>
-												);
-											});
-										}
-									})()}
-								</select>
+							<div>
+								<h2 className="text-xl font-medium">Add layers</h2>
 							</div>
+							{/* <SelectProject /> */}
 							<div>
 								<Button
 									btnText="Add a Layer"

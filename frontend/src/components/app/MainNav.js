@@ -2,16 +2,26 @@ import React, { useContext } from "react";
 import Button from "../Button";
 import AppContext from "../../context/AppContext";
 import { connectWallet } from "./Wallet";
+import { NFTS_GENERATOR_TAB, SMART_CONTRACTS_TAB } from "../../constants/constants";
+import SelectProject from "./SelectProject";
 
 const MainNav = () => {
-	const { state } = useContext(AppContext);
+	const { state} = useContext(AppContext);
 	return (
 		<div>
 			<div className="flex justify-between items-center pb-8">
-				<div>
-					<h1 className="font-bold text-2xl">
-						{state.app.selectedTab.toString()}
-						</h1>
+				<div className="flex gap-x-1 items-center">
+					<h1 className="font-bold text-2xl">{state.app.selectedTab.toString()}</h1>
+					<div>
+						{(() => {
+							if (
+								state.app.selectedTab === NFTS_GENERATOR_TAB ||
+								state.app.selectedTab === SMART_CONTRACTS_TAB
+							) {
+								return <SelectProject />;
+							}
+						})()}
+					</div>
 				</div>
 				<div>
 					{state.user.address ? (
