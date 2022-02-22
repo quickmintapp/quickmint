@@ -51,8 +51,9 @@ const appReducer = (state, action) => {
 		case REMOVE_PROJECT:
 			id = payload.id;
 			editedUserProjects = state.user.projects.filter((project) => project.id !== id);
-			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
-			if (findProjectById) {
+			// findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			// console.log(findProjectById);
+			if (id === state.user.selectedProject.id) {
 				if (editedUserProjects.length === 0) {
 					return {
 						...state,
@@ -65,13 +66,17 @@ const appReducer = (state, action) => {
 				} else {
 					// find index of that project & then see if we can up it, then ok, otherwise down
 					removedProjectIndex = state.user.projects.findIndex((p) => p.id === id);
-					availableIndexUp = state.user.projects[removedProjectIndex - 1];
-					availableIndexDown = state.user.projects[removedProjectIndex + 1];
+					availableIndexDown = state.user.projects[removedProjectIndex - 1];
+					availableIndexUp = state.user.projects[removedProjectIndex + 1];
+					console.log({removedProjectIndex, availableIndexUp ,availableIndexDown});
 					if (availableIndexUp) {
-						updatedSelectedProject = editedUserProjects[availableIndexUp];
+						console.log("up");
+						updatedSelectedProject = editedUserProjects[removedProjectIndex + 1];
 					} else if (availableIndexDown) {
-						updatedSelectedProject = editedUserProjects[availableIndexDown];
+						console.log("down");
+						updatedSelectedProject = editedUserProjects[removedProjectIndex - 1];
 					}
+					console.log(updatedSelectedProject);
 					return {
 						...state,
 						user: {

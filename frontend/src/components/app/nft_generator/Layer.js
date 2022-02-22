@@ -114,7 +114,7 @@ const Layer = ({ layerId, layerName, layerImages }) => {
 					<p
 						className="font-bold cursor-pointer"
 						onClick={() => {
-							dispatch({ type: REMOVE_LAYER, payload: {layerId} });
+							dispatch({ type: REMOVE_LAYER, payload: { layerId } });
 						}}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

@@ -22,10 +22,33 @@ const App = () => {
 	};
 
 	useEffect(() => {
-		const mutatedLayers = state.nftGen.layers.map(layer => {
-			return {...layer, layerImages: []}
-		})
-		const mutatedState = {...state, nftGen: {...state.nftGen, layers: mutatedLayers}}
+		let mutatedProjects = state.user.projects.map((p) => {
+			let mutatedLayers = p.nftGen.layers.map((l) => {
+				return { ...l, layerImages: [] };
+			});
+			return { ...p, nftGen: { ...p.nftGen, layers: mutatedLayers } };
+		});
+		let mutatedSelectedProject;
+		if (state.user.selectedProject === "--NO PROJECTS--") {
+			mutatedSelectedProject = "--NO PROJECTS--";
+		} else {
+			let mutatedSelectedProjectLayers = state.user.selectedProject.nftGen.layers.map((l) => {
+				return { ...l, layerImages: [] };
+			});
+			mutatedSelectedProject = {
+				...state.user.selectedProject,
+				nftGen: { ...state.user.selectedProject.nftGen, layers: mutatedSelectedProjectLayers },
+			};
+		}
+		let mutatedState = {
+			...state,
+			user: {
+				...state.user,
+				projects: mutatedProjects,
+				selectedProject: mutatedSelectedProject,
+			},
+		};
+
 		localStorage.setItem("state", JSON.stringify(mutatedState));
 	}, [state]);
 
