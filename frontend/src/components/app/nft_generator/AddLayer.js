@@ -5,7 +5,7 @@ import { ADD_LAYER, TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActi
 import uuid from "react-uuid";
 
 const AddLayer = () => {
-	const { dispatch } = useContext(AppContext);
+	const { state, dispatch } = useContext(AppContext);
 	const [layerName, setLayerName] = useState("");
 	const [error, setError] = useState("");
 
@@ -28,20 +28,31 @@ const AddLayer = () => {
 	};
 
 	const handleIsPopupOpen = () => {
-		// setLayerName(layerName);
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP });
 	};
 
 	return (
 		<div className={`bg-gray-50 w-1/2 rounded-lg p-8 flex flex-col items-center gap-y-2 m-auto`}>
 			<div className="flex justify-end w-full">
-				<p
+				<div
 					className="font-bold cursor-pointer"
 					onClick={() => {
 						handleIsPopupOpen();
 					}}>
-					X
-				</p>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="h-6 w-6"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor">
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							strokeWidth={2}
+							d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
+					</svg>
+				</div>
 			</div>
 			<div className="flex flex-col items-center gap-y-6">
 				<div>

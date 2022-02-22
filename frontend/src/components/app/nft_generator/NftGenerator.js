@@ -15,15 +15,32 @@ import uuid from "react-uuid";
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
 	const { selectedProject } = state.user;
-	const { layers, isPopupOpen, isEditPopupOpen } = state.nftGen;
+	const layers =
+		(typeof state.user.selectedProject === "object" && state.user.selectedProject.nftGen.layers) ||
+		[];
+	const { isPopupOpen } = state.user;
+	const isEditPopupOpen =
+		state.user.selectedProject === "--NO PROJECTS--" ? false : state.user.selectedProject.nftGen.isEditPopupOpen;
 
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP, payload: selectedProject });
 	};
 
+	//this useeffect was changing the selectedproject everytime the projects changed, it was a feature
+	// now we need to bring it back again
+	// we need to know which project we changed and then we can use that project id to set it to 
+	// selected project, so yeah that might work...
+
 	useEffect(() => {
 		if (state.user.projects.length > 0) {
-			dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
+			// this is when initially the user creates the project and goes to nftgenerator tab
+			if (selectedProject === "--NO PROJECTS--") {
+				dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
+			}
+			//  else {
+			// 	// here we are gonna find what project changed and sync it to selectedprojects
+			// 	// 
+			// }
 		} else if (state.user.projects.length === 0) {
 			dispatch({ type: SELECT_PROJECT_INIT });
 		}
@@ -75,7 +92,7 @@ const NftGenerator = () => {
 									btnText="Add a Layer"
 									classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium m-2"
 									onClick={() => handleIsPopupOpen()}
-									disabled={state.user.address ? false : true}
+									disabled={state.user.address && selectedProject.id ? false : true}
 								/>
 							</div>
 						</div>
@@ -86,8 +103,10 @@ const NftGenerator = () => {
 							{(() => {
 								if (state.user.address) {
 									if (state.user.projects.length > 0) {
-										return state.nftGen.layers.length > 0 ? (
-											layers.map((layer) => {
+										if (layers.length === 0) {
+											return <Message message="There are no layers." />;
+										} else if (layers.length > 0) {
+											return layers.map((layer) => {
 												return (
 													<Layer
 														key={uuid()}
@@ -96,10 +115,8 @@ const NftGenerator = () => {
 														layerImages={layer.layerImages}
 													/>
 												);
-											})
-										) : (
-											<Message message="There are no layers." />
-										);
+											});
+										}
 									} else if (selectedProject === "--NO PROJECTS--") {
 										return <Message message="There are no projects selected." />;
 									}
@@ -107,26 +124,6 @@ const NftGenerator = () => {
 									return <Message message="Connect to wallet first." />;
 								}
 							})()}
-							{/* {state.user.address ? (
-								state.nftGen.layers.length > 0 ? (
-									layers.map((layer) => {
-										return (
-											<Layer
-												key={uuid()}
-												layerId={layer.layerId}
-												layerName={layer.layerName}
-												layerImages={layer.layerImages}
-											/>
-										);
-									})
-								) : !state.user.projects.length === 0 ? (
-									<Message message="There are no layers." />
-								) : (
-									
-								)
-							) : (
-								
-							)} */}
 						</div>
 					</div>
 
@@ -137,7 +134,7 @@ const NftGenerator = () => {
 							<Button
 								btnText="Generate"
 								classes="bg-bg-200 text-black hover:bg-bg-200 hover:drop-shadow-lg font-medium p-4 text-xl"
-								disabled={state.user.address && layers.length > 1 ? false : true}
+								disabled={state.user.address && selectedProject.id ? false : true}
 							/>
 							<Button
 								btnText="Upload to IPFS"

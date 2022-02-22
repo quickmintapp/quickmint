@@ -15,5 +15,7 @@ export const initState = {
 		walletName: "",
 		selectedProject: "--NO PROJECTS--",
 		projects: [],
+		isPopupOpen: false,
+		isEditPopupOpen: false,
 	},
 };

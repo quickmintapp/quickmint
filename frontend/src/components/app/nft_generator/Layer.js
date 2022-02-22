@@ -12,26 +12,6 @@ import Message from "../Message";
 const Layer = ({ layerId, layerName, layerImages }) => {
 	const { dispatch } = useContext(AppContext);
 
-	// const handleSelectedFiles = (id, e) => {
-	// 	const selectedFiles = [];
-	// 	selectedFiles.push(e.target.files);
-	// 	let arr = [];
-	// 	for (let i = 0; i < selectedFiles[0].length; i++) {
-	// 		arr.push({
-	// 			id: uuid(),
-	// 			src: URL.createObjectURL(selectedFiles[0][i]),
-	// 			name: selectedFiles[0][i].name,
-	// 		});
-	// 	}
-	// 	const editedLayer = {
-	// 		id,
-	// 		layerName,
-	// 		layerImages: arr,
-	// 	};
-	// 	console.log({ id, layerName });
-	// 	dispatch({ type: ADD_LAYER_IMAGES, payload: editedLayer });
-	// };
-
 	return (
 		<div className="p-6 w-full rounded-lg bg-gray-50 flex flex-col justify-between items-center gap-y-4">
 			<div className="w-full flex flex-col justify-center items-start">
@@ -134,7 +114,7 @@ const Layer = ({ layerId, layerName, layerImages }) => {
 					<p
 						className="font-bold cursor-pointer"
 						onClick={() => {
-							dispatch({ type: REMOVE_LAYER, payload: layerId });
+							dispatch({ type: REMOVE_LAYER, payload: {layerId} });
 						}}>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

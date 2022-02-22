@@ -27,6 +27,10 @@ const appReducer = (state, action) => {
 	let id;
 	let editedUserProjects;
 	let findProjectById;
+	let removedProjectIndex;
+	let availableIndexUp;
+	let availableIndexDown;
+	let updatedSelectedProject;
 
 	switch (action.type) {
 		case CHANGE_SELECTED_TAB:
@@ -39,7 +43,6 @@ const appReducer = (state, action) => {
 				nftGen: {
 					layers: [],
 					currentEditLayer: "",
-					isPopupOpen: false,
 					isEditPopupOpen: false,
 				},
 			};
@@ -48,7 +51,42 @@ const appReducer = (state, action) => {
 		case REMOVE_PROJECT:
 			id = payload.id;
 			editedUserProjects = state.user.projects.filter((project) => project.id !== id);
-			return { ...state, user: { ...state.user, projects: editedUserProjects } };
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			if (findProjectById) {
+				if (editedUserProjects.length === 0) {
+					return {
+						...state,
+						user: {
+							...state.user,
+							projects: editedUserProjects,
+							selectedProject: "--NO PROJECTS--",
+						},
+					};
+				} else {
+					// find index of that project & then see if we can up it, then ok, otherwise down
+					removedProjectIndex = state.user.projects.findIndex((p) => p.id === id);
+					console.log(removedProjectIndex);
+					availableIndexUp = state.user.projects[removedProjectIndex - 1];
+					availableIndexDown = state.user.projects[removedProjectIndex + 1];
+					console.log(availableIndexUp, availableIndexDown);
+					if (availableIndexUp) {
+						updatedSelectedProject = editedUserProjects[availableIndexUp];
+					} else if (availableIndexDown) {
+						updatedSelectedProject = editedUserProjects[availableIndexDown];
+					}
+					console.log(updatedSelectedProject);
+					return {
+						...state,
+						user: {
+							...state.user,
+							projects: editedUserProjects,
+							selectedProject: updatedSelectedProject,
+						},
+					};
+				}
+			} else {
+				return { ...state, user: { ...state.user, projects: editedUserProjects } };
+			}
 		case EDIT_PROJECT:
 			editedUserProjects = state.user.projects.map((project) => {
 				if (project.id === payload.id) {
@@ -56,53 +94,136 @@ const appReducer = (state, action) => {
 				}
 				return project;
 			});
-			return { ...state, user: { ...state.user, projects: editedUserProjects } };
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			return {
+				...state,
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
+			};
 		case SELECT_PROJECT_INIT:
 			return { ...state, user: { ...state.user, selectedProject: "--NO PROJECTS--" } };
 		case SELECT_PROJECT:
 			findProjectById = state.user.projects.find((p) => p.id === payload.id);
 			return { ...state, user: { ...state.user, selectedProject: findProjectById } };
 		case ADD_LAYER:
-			return { ...state, nftGen: { ...state.nftGen, layers: [...state.nftGen.layers, payload] } };
-		case EDIT_LAYER:
-			editedLayers = state.nftGen.layers.map((layer) => {
-				if (layer.layerId === payload.id) {
-					return { ...layer, layerName: payload.layerName };
-				}
-				return layer;
-			});
-			return { ...state, nftGen: { ...state.nftGen, layers: editedLayers } };
-		case CURRENT_LAYER_EDITING:
-			return { ...state, nftGen: { ...state.nftGen, currentEditLayer: payload } };
-		case REMOVE_LAYER:
-			newLayers = state.nftGen.layers.filter((layer) => layer.layerId !== payload);
-			return { ...state, nftGen: { ...state.nftGen, layers: newLayers } };
-		case TOGGLE_ADD_LAYER_POPUP:
-			const selectedProject = payload;
 			editedUserProjects = state.user.projects.map((p) => {
-				if (p.id === selectedProject.id) {
-					return { ...p, nftGen: { ...p.nftGen, isPopupOpen: !p.nftGen.isPopupOpen } };
+				if (p.id === state.user.selectedProject.id) {
+					return { ...p, nftGen: { ...p.nftGen, layers: [...p.nftGen.layers, payload] } };
 				}
 				return p;
 			});
-			return { ...state, user: { ...state.user, projects: editedUserProjects } };
-		case TOGGLE_EDIT_LAYER_POPUP:
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
 			return {
 				...state,
-				nftGen: { ...state.nftGen, isEditPopupOpen: !state.nftGen.isEditPopupOpen },
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
 			};
 		case ADD_LAYER_IMAGES:
 			const { layerId, layerImages } = payload;
-			editedLayers = state.nftGen.layers.map((layer) => {
-				if (layer.layerId === layerId) {
-					return { ...layer, layerImages: [...layerImages] };
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === state.user.selectedProject.id) {
+					newLayers = p.nftGen.layers.map((layer) => {
+						if (layer.layerId === layerId) {
+							return { ...layer, layerImages: [...layerImages] };
+						}
+						return layer;
+					});
+					return { ...p, nftGen: { ...p.nftGen, layers: newLayers } };
 				}
-				return layer;
+				return p;
 			});
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
 			return {
 				...state,
-				nftGen: { ...state.nftGen, layers: editedLayers },
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
 			};
+		case EDIT_LAYER:
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === state.user.selectedProject.id) {
+					newLayers = p.nftGen.layers.map((layer) => {
+						if (layer.layerId === payload.id) {
+							return { ...layer, layerName: payload.layerName };
+						}
+						return layer;
+					});
+					return { ...p, nftGen: { ...p.nftGen, layers: newLayers } };
+				}
+				return p;
+			});
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			return {
+				...state,
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
+			};
+		case CURRENT_LAYER_EDITING:
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === state.user.selectedProject.id) {
+					return { ...p, nftGen: { ...p.nftGen, currentEditLayer: payload } };
+				}
+				return p;
+			});
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			return {
+				...state,
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
+			};
+		case REMOVE_LAYER:
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === state.user.selectedProject.id) {
+					newLayers = p.nftGen.layers.filter((layer) => layer.layerId !== payload.layerId);
+					return { ...p, nftGen: { ...p.nftGen, layers: newLayers } };
+				}
+				return p;
+			});
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			return {
+				...state,
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
+			};
+		case TOGGLE_ADD_LAYER_POPUP:
+			return { ...state, user: { ...state.user, isPopupOpen: !state.user.isPopupOpen } };
+		case TOGGLE_EDIT_LAYER_POPUP:
+			editedUserProjects = state.user.projects.map((p) => {
+				if (p.id === state.user.selectedProject.id) {
+					return { ...p, nftGen: { ...p.nftGen, isEditPopupOpen: !p.nftGen.isEditPopupOpen } };
+				}
+				return p;
+			});
+			findProjectById = editedUserProjects.find((p) => p.id === state.user.selectedProject.id);
+			return {
+				...state,
+				user: {
+					...state.user,
+					projects: editedUserProjects,
+					selectedProject: { ...findProjectById },
+				},
+			};
+		// return {
+		// 	...state,
+		// 	nftGen: { ...state.nftGen, isEditPopupOpen: !state.nftGen.isEditPopupOpen },
+		// };
 		case CONNECTED_WALLET:
 			const userWalletAddress = payload; //wallet address of user with already connected account
 			return { ...state, user: { ...state.user, address: userWalletAddress } };
