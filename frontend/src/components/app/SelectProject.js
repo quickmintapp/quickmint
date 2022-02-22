@@ -1,11 +1,27 @@
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import AppContext from "../../context/AppContext";
 
-import { SELECT_PROJECT } from "../../reducers/reducerActions";
+import { SELECT_PROJECT, SELECT_PROJECT_INIT } from "../../reducers/reducerActions";
 
 const SelectProject = () => {
 	const { state, dispatch } = useContext(AppContext);
 	const { selectedProject } = state.user;
+
+	useEffect(() => {
+		if (state.user.projects.length > 0) {
+			// this is when initially the user creates the project and goes to nftgenerator tab
+			if (selectedProject === "--NO PROJECTS--") {
+				dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
+			}
+			//  else {
+			// 	// here we are gonna find what project changed and sync it to selectedprojects
+			// 	//
+			// }
+		} else if (state.user.projects.length === 0) {
+			dispatch({ type: SELECT_PROJECT_INIT });
+		}
+	}, [state.user.projects, dispatch, selectedProject]);
+
 	return (
 		<div className="flex gap-x-1 place-items-center">
 			{/* <h2 className="text-xl font-medium">Select Project:</h2> */}

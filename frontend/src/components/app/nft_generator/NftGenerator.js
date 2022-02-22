@@ -34,20 +34,20 @@ const NftGenerator = () => {
 	// we need to know which project we changed and then we can use that project id to set it to
 	// selected project, so yeah that might work...
 
-	useEffect(() => {
-		if (state.user.projects.length > 0) {
-			// this is when initially the user creates the project and goes to nftgenerator tab
-			if (selectedProject === "--NO PROJECTS--") {
-				dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
-			}
-			//  else {
-			// 	// here we are gonna find what project changed and sync it to selectedprojects
-			// 	//
-			// }
-		} else if (state.user.projects.length === 0) {
-			dispatch({ type: SELECT_PROJECT_INIT });
-		}
-	}, [state.user.projects, dispatch, selectedProject]);
+	// useEffect(() => {
+	// 	if (state.user.projects.length > 0) {
+	// 		// this is when initially the user creates the project and goes to nftgenerator tab
+	// 		if (selectedProject === "--NO PROJECTS--") {
+	// 			dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
+	// 		}
+	// 		//  else {
+	// 		// 	// here we are gonna find what project changed and sync it to selectedprojects
+	// 		// 	//
+	// 		// }
+	// 	} else if (state.user.projects.length === 0) {
+	// 		dispatch({ type: SELECT_PROJECT_INIT });
+	// 	}
+	// }, [state.user.projects, dispatch, selectedProject]);
 
 	return (
 		<div className="flex flex-col">
