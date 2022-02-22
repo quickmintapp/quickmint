@@ -5,7 +5,7 @@ import { ADD_LAYER, TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActi
 import uuid from "react-uuid";
 
 const AddLayer = () => {
-	const { state, dispatch } = useContext(AppContext);
+	const { dispatch } = useContext(AppContext);
 	const [layerName, setLayerName] = useState("");
 	const [error, setError] = useState("");
 

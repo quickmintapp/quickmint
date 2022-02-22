@@ -44,7 +44,7 @@ const NftGenerator = () => {
 		} else if (state.user.projects.length === 0) {
 			dispatch({ type: SELECT_PROJECT_INIT });
 		}
-	}, [state.user.projects, dispatch]);
+	}, [state.user.projects, dispatch, selectedProject]);
 
 	return (
 		<div className="flex flex-col">

@@ -65,16 +65,13 @@ const appReducer = (state, action) => {
 				} else {
 					// find index of that project & then see if we can up it, then ok, otherwise down
 					removedProjectIndex = state.user.projects.findIndex((p) => p.id === id);
-					console.log(removedProjectIndex);
 					availableIndexUp = state.user.projects[removedProjectIndex - 1];
 					availableIndexDown = state.user.projects[removedProjectIndex + 1];
-					console.log(availableIndexUp, availableIndexDown);
 					if (availableIndexUp) {
 						updatedSelectedProject = editedUserProjects[availableIndexUp];
 					} else if (availableIndexDown) {
 						updatedSelectedProject = editedUserProjects[availableIndexDown];
 					}
-					console.log(updatedSelectedProject);
 					return {
 						...state,
 						user: {
