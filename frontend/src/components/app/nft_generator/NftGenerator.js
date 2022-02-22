@@ -1,17 +1,12 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Layer from "./Layer";
 import Button from "../../Button";
 import Message from "../Message";
 import AppContext from "./../../../context/AppContext";
 import AddLayer from "./AddLayer";
 import EditLayer from "./EditLayer";
-import {
-	TOGGLE_ADD_LAYER_POPUP,
-	SELECT_PROJECT,
-	SELECT_PROJECT_INIT,
-} from "../../../reducers/reducerActions";
+import { TOGGLE_ADD_LAYER_POPUP } from "../../../reducers/reducerActions";
 import uuid from "react-uuid";
-import SelectProject from "../SelectProject";
 
 const NftGenerator = () => {
 	const { state, dispatch } = useContext(AppContext);
@@ -28,26 +23,6 @@ const NftGenerator = () => {
 	const handleIsPopupOpen = () => {
 		dispatch({ type: TOGGLE_ADD_LAYER_POPUP, payload: selectedProject });
 	};
-
-	//this useeffect was changing the selectedproject everytime the projects changed, it was a feature
-	// now we need to bring it back again
-	// we need to know which project we changed and then we can use that project id to set it to
-	// selected project, so yeah that might work...
-
-	// useEffect(() => {
-	// 	if (state.user.projects.length > 0) {
-	// 		// this is when initially the user creates the project and goes to nftgenerator tab
-	// 		if (selectedProject === "--NO PROJECTS--") {
-	// 			dispatch({ type: SELECT_PROJECT, payload: { id: state.user.projects[0].id } });
-	// 		}
-	// 		//  else {
-	// 		// 	// here we are gonna find what project changed and sync it to selectedprojects
-	// 		// 	//
-	// 		// }
-	// 	} else if (state.user.projects.length === 0) {
-	// 		dispatch({ type: SELECT_PROJECT_INIT });
-	// 	}
-	// }, [state.user.projects, dispatch, selectedProject]);
 
 	return (
 		<div className="flex flex-col">

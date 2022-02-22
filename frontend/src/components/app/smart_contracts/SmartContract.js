@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Button from "../../Button";
 import AppContext from "../../../context/AppContext";
 import Message from "../Message";
+import ContractCard from "./ContractCard";
 
 const SmartContract = () => {
 	const { state } = useContext(AppContext);
@@ -33,15 +34,15 @@ const SmartContract = () => {
 				<div>
 					{(() => {
 						if (state.user.projects && state.user.projects.length > 0) {
-							// map for selectedproject contracts
 							if (selectedProject) {
 								if (selectedProject.contracts && selectedProject.contracts.length > 0) {
 									return (
 										<>
-											{/* <div key={new Date()}>i</div> */}
-											{selectedProject.contracts.map((c) => {
-												return <div key={c.id}>{c.id}</div>;
-											})}
+											<div className="grid grid-cols-4 gap-2">
+												{selectedProject.contracts.map((c) => {
+													return <ContractCard key={c.id} />;
+												})}
+											</div>
 										</>
 									);
 								} else {

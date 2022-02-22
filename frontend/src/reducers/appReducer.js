@@ -22,7 +22,6 @@ const appReducer = (state, action) => {
 	const { payload } = action;
 
 	let newLayers;
-	let editedLayers;
 	let projectInfo;
 	let id;
 	let editedUserProjects;
@@ -46,7 +45,7 @@ const appReducer = (state, action) => {
 					isEditPopupOpen: false,
 					ipfsHash: "",
 				},
-				contracts: [{id: 1}],
+				contracts: [{ id: 1 }],
 			};
 			const newUserProjects = [...state.user.projects, newUserProject];
 			return { ...state, user: { ...state.user, projects: newUserProjects } };
@@ -70,19 +69,15 @@ const appReducer = (state, action) => {
 					removedProjectIndex = state.user.projects.findIndex((p) => p.id === id);
 					availableIndexDown = state.user.projects[removedProjectIndex - 1];
 					availableIndexUp = state.user.projects[removedProjectIndex + 1];
-					console.log({ removedProjectIndex, availableIndexUp, availableIndexDown });
 					if (availableIndexUp) {
-						console.log("up");
 						if (editedUserProjects.length === 1) {
 							updatedSelectedProject = editedUserProjects[0];
 						} else {
 							updatedSelectedProject = editedUserProjects[removedProjectIndex + 1];
 						}
 					} else if (availableIndexDown) {
-						console.log("down");
 						updatedSelectedProject = editedUserProjects[removedProjectIndex - 1];
 					}
-					console.log(updatedSelectedProject);
 					return {
 						...state,
 						user: {
