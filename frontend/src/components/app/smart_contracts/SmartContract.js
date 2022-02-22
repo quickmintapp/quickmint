@@ -33,11 +33,13 @@ const SmartContract = () => {
 				</div>
 				<div>
 					{(() => {
-						if (state.user.projects && state.user.projects.length > 0) {
-							if (selectedProject) {
-								if (selectedProject.contracts && selectedProject.contracts.length > 0) {
-									return (
-										<>
+						if (state.user.address) {
+
+							if (state.user.projects && state.user.projects.length > 0) {
+								if (selectedProject) {
+									if (selectedProject.contracts && selectedProject.contracts.length > 0) {
+										return (
+											<>
 											<div className="grid grid-cols-4 gap-2">
 												{selectedProject.contracts.map((c) => {
 													return <ContractCard key={c.id} />;
@@ -52,6 +54,9 @@ const SmartContract = () => {
 						} else {
 							return <Message message={"There are no projects selected."} />;
 						}
+					} else {
+						return <Message message={"Connect to wallet first."} />
+					}
 					})()}
 				</div>
 			</div>
