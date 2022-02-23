@@ -3,6 +3,9 @@ import Button from "../../Button";
 import AppContext from "../../../context/AppContext";
 import Message from "../Message";
 import ContractCard from "./ContractCard";
+import Web3 from "web3";
+console.log(Web3);
+
 
 const SmartContract = () => {
 	const { state } = useContext(AppContext);
